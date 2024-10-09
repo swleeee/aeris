@@ -1,0 +1,21 @@
+{
+  "name": "@aeris/ui",
+  "version": "1.0.0",
+  "main": "index.ts",
+  "dependencies": {
+    "@aeris/core": "workspace:*"
+  },
+  "scripts": {
+    "build": "vite build",
+    "dev": "vite",
+    "storybook": "start-storybook -p 6006",
+    "test": "vitest"
+  },
+  "devDependencies": {
+    "vite": "^2.0.0",
+    "vitest": "^0.16.0",
+    "@vitejs/plugin-react": "^1.0.0",
+    "@storybook/react": "^6.0.0",
+    "@storybook/addon-essentials": "^6.0.0"
+  }
+}

@@ -1,0 +1,23 @@
+# Node.js 패키지 관련
+node_modules/
+.pnpm/
+
+# Turborepo 캐시
+.turbo/
+
+# Vite 빌드 아티팩트
+dist/
+
+# TypeScript 빌드 정보
+*.tsbuildinfo
+
+# Storybook 빌드 결과물
+storybook-static/
+
+# 환경 설정 파일
+.env
+.env.local
+
+# IDE 설정
+.vscode/
+.idea/

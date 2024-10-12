@@ -1,9 +1,13 @@
 {
   "name": "@aeris/core",
   "version": "1.0.0",
-  "main": "index.ts",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "exports": {
-    ".": "./src/index.ts"
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.js"
+    }
   },
   "scripts": {
     "build": "vite build",
@@ -11,8 +15,12 @@
     "test": "vitest"
   },
   "devDependencies": {
-    "vite": "^2.0.0",
-    "vitest": "^0.16.0",
-    "@vitejs/plugin-react": "^1.0.0"
+    "@vitejs/plugin-react": "^4.3.2",
+    "vite": "^5.4.8",
+    "vitest": "^2.1.2"
+  },
+  "peerDependencies": {
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
   }
 }

@@ -13,7 +13,7 @@ export const useInput = ({
     const updatedValue = e.target.value
 
     if (onChange) {
-      onChange(updatedValue)
+      onChange(e)
       return
     }
 

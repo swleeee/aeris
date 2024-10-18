@@ -3,7 +3,7 @@ import { InputHTMLAttributes } from 'react'
 type ControlledProps = {
   value: string
   defaultValue?: never
-  onChange: (value: string) => void
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
 }
 
 type UncontrolledProps = {

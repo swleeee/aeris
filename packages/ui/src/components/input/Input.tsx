@@ -2,10 +2,13 @@ import { forwardRef } from 'react'
 import { BaseInput } from '@aeris/core'
 
 import {
+  errorMessageStyles,
   getBaseStyles,
-  getContainerStyle,
-  getErrorMessageStyle,
-  getLabelStyle,
+  getContainerStyles,
+  getErrorStyles,
+  getLabelStyles,
+  inputStyles,
+  lengthStyles,
   resetInputStyles,
 } from './Input.style'
 import { colorPalette } from '../../styles'
@@ -17,8 +20,9 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
       id,
       disabled = false,
       readOnly = false,
-      fullWidth = false,
+      showLength = false,
       variant = 'outlined',
+      width = '100%',
       size = 'medium',
       color = 'gray',
       borderRadius = 'md',
@@ -40,38 +44,45 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
       variant,
       size,
       error,
-      fullWidth,
+      width,
       color,
       borderRadius,
+      readOnly,
+      disabled,
     })
-    const containerStyles = getContainerStyle({ style, fullWidth })
-    const errorStyles = error ? getErrorMessageStyle(error.status) : undefined
+    const containerStyles = getContainerStyles({ style, width })
+    const errorStyles = error ? getErrorStyles(error.status) : undefined
 
     return (
       <div css={containerStyles}>
         {label && (
-          <label css={getLabelStyle} htmlFor={id}>
+          <label css={getLabelStyles} htmlFor={id}>
             {label}
           </label>
         )}
-        <div css={[baseStyles, errorStyles]}>
+        <div css={[baseStyles]}>
           {prefix && <span css={{ marginRight: '0.5rem' }}>{prefix}</span>}
           <BaseInput
-            css={resetInputStyles}
+            css={[resetInputStyles, inputStyles, errorStyles]}
             ref={ref}
             id={id}
             placeholder={placeholder}
             disabled={disabled}
             readOnly={readOnly}
+            maxLength={maxLength}
             {...(value === undefined ? { defaultValue } : { value, onChange })}
             {...props}
           />
           {suffix && <span css={{ marginLeft: '0.5rem' }}>{suffix}</span>}
-          {maxLength && (
-            <p>{`${(value as string)?.length || 0}/${maxLength}`}</p>
+          {showLength && (
+            <p
+              css={lengthStyles}
+            >{`${(value as string)?.length || 0}/${maxLength}`}</p>
           )}
         </div>
-        {error && <p css={errorStyles}>{error.message}</p>}
+        {error && (
+          <p css={[errorStyles, errorMessageStyles]}>{error.message}</p>
+        )}
       </div>
     )
   }

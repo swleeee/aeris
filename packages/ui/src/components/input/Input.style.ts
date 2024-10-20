@@ -12,23 +12,32 @@ export const resetInputStyles = css`
   font: inherit;
 `
 
-export const getContainerStyle = ({
+export const getContainerStyles = ({
   style,
-  fullWidth,
-}: Pick<InputProps, 'style' | 'fullWidth'>) => css`
+  width,
+}: Pick<InputProps, 'style' | 'width'>) => css`
   position: relative;
   display: flex;
   flex-direction: column;
-  width: ${fullWidth ? '100%' : 'auto'};
+  width: ${typeof width === 'string' ? width : 'fit-content'};
   ${style && css(style as any)}
 `
 
-export const getErrorMessageStyle = (
-  status: InputProps['error']['status']
-) => css`
-  color: ${status === 'error'
-    ? colorPalette.red[500]
-    : colorPalette.orange[500]};
+const getErrorColor = (status: InputProps['error']['status']) => {
+  switch (status) {
+    case 'error':
+      return colorPalette.red[500]
+    case 'warning':
+      return colorPalette.orange[500]
+  }
+}
+
+export const getErrorStyles = (status: InputProps['error']['status']) => css`
+  color: ${getErrorColor(status)};
+`
+
+export const errorMessageStyles = css`
+  margin-top: 0.25rem;
 `
 
 export const getBorderRadius = (radius: InputProps['borderRadius']) => {
@@ -48,8 +57,9 @@ export const getBorderRadius = (radius: InputProps['borderRadius']) => {
   }
 }
 
-export const getLabelStyle = css`
-  margin-bottom: 0.5rem;
+export const getLabelStyles = css`
+  margin-bottom: 0.25rem;
+  width: fit-content;
   font-weight: 500;
   color: ${colorPalette.gray[500]};
 `
@@ -58,17 +68,27 @@ export const getBaseStyles = ({
   variant,
   size,
   error,
-  fullWidth,
+  width,
   color,
   borderRadius,
+  readOnly,
+  disabled,
 }: Pick<
   InputProps,
-  'variant' | 'size' | 'error' | 'fullWidth' | 'color' | 'borderRadius'
+  | 'variant'
+  | 'size'
+  | 'error'
+  | 'width'
+  | 'color'
+  | 'borderRadius'
+  | 'readOnly'
+  | 'disabled'
 >) => css`
   display: inline-flex;
   align-items: center;
-  width: ${fullWidth ? '100%' : 'auto'};
-  border: 1px solid ${error ? colorPalette.red[500] : colorPalette[color][500]};
+  width: ${typeof width === 'number' ? `${width / 16}rem` : width};
+  border: 1px solid
+    ${error ? getErrorColor(error.status) : colorPalette[color][500]};
   border-radius: ${getBorderRadius(borderRadius)};
   padding: ${size === 'small'
     ? '0.5rem'
@@ -84,15 +104,26 @@ export const getBaseStyles = ({
     border-color: ${colorPalette.blue[500]};
   }
 
-  &[readOnly] {
-    background-color: ${colorPalette.gray[100]};
-    color: ${colorPalette.gray[500]};
-    cursor: not-allowed;
-  }
-
-  &:disabled {
+  ${disabled &&
+  css`
     background-color: ${colorPalette.gray[200]};
     color: ${colorPalette.gray[400]};
     cursor: not-allowed;
-  }
+  `}
+
+  ${readOnly &&
+  css`
+    background-color: ${colorPalette.gray[100]};
+    color: ${colorPalette.gray[500]};
+    cursor: not-allowed;
+  `}
+`
+
+export const inputStyles = css`
+  flex: 1;
+  width: 100%;
+`
+
+export const lengthStyles = css`
+  margin-left: 0.25rem;
 `

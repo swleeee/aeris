@@ -1,11 +1,28 @@
+import { useState } from 'react'
 import { Meta, StoryObj } from '@storybook/react'
 
 import Input from './Input'
 import { colorPalette } from '../../styles'
 
+const inputStateDecorator = (Story, context) => {
+  const [inputValue, setInputValue] = useState<string>('')
+
+  return (
+    <Story
+      {...context}
+      args={{
+        ...context.args,
+        value: inputValue,
+        onChange: (e) => setInputValue(e.target.value),
+      }}
+    />
+  )
+}
+
 const meta: Meta<typeof Input> = {
   title: 'Components/Input',
   component: Input,
+  decorators: [inputStateDecorator],
   argTypes: {
     size: {
       options: ['small', 'medium', 'large'],

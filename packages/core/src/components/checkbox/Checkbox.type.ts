@@ -1,4 +1,4 @@
-import { InputHTMLAttributes } from 'react'
+import { InputHTMLAttributes, ReactNode } from 'react'
 
 type ControlledProps = {
   checked: boolean
@@ -12,5 +12,11 @@ type UncontrolledProps = {
   checked?: never
 }
 
+type CheckboxChildrenProps = {
+  isDefaultChecked: boolean
+}
+
 export type CheckboxProps = (ControlledProps | UncontrolledProps) &
-  Omit<InputHTMLAttributes<HTMLInputElement>, 'onChange'>
+  Omit<InputHTMLAttributes<HTMLInputElement>, 'onChange' | 'children'> & {
+    children?: (props: CheckboxChildrenProps) => ReactNode
+  }

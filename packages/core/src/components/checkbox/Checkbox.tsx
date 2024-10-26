@@ -12,6 +12,7 @@ const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
       defaultChecked,
       onChange,
       disabled = false,
+      children,
       ...props
     },
     ref
@@ -21,18 +22,22 @@ const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
     })
 
     return (
-      <input
-        ref={ref}
-        type="checkbox"
-        checked={isChecked}
-        aria-checked={isChecked}
-        disabled={disabled}
-        id={id}
-        name={name}
-        value={value}
-        onChange={handleChange}
-        {...props}
-      />
+      <>
+        <input
+          ref={ref}
+          type="checkbox"
+          checked={isChecked}
+          aria-checked={isChecked}
+          disabled={disabled}
+          id={id}
+          name={name}
+          value={value}
+          onChange={handleChange}
+          {...props}
+        />
+        {typeof children === 'function' &&
+          children({ isDefaultChecked: isChecked })}
+      </>
     )
   }
 )

@@ -4,6 +4,11 @@
       "dependsOn": ["^build"],
       "outputs": ["dist/**"]
     },
+    "test": {
+      "dependsOn": ["build"],
+      "outputs": [],
+      "persistent": true
+    },
     "lint": {
       "cache": false,
       "outputs": []
@@ -11,9 +16,15 @@
     "dev": {
       "cache": false
     },
-    "test": {
-      "dependsOn": ["build"],
-      "outputs": []
+    "storybook": {
+      "cache": false,
+      "dependsOn": ["^build"]
+    },
+    "build-storybook": {
+      "dependsOn": ["^build"],
+      "outputs": ["storybook-static/**"]
     }
-  }
+  },
+  "globalDependencies": ["package.json", "tsconfig.base.json"],
+  "globalEnv": ["NODE_ENV"]
 }
